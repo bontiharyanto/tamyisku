@@ -490,3 +490,147 @@ Spesifikasi & Logika Integrasi:
 Buatkan kode lengkap untuk komponen Frontend, Supabase Edge Function (`create-payment` & `payment-webhook`), dan penanganan Supabase Realtime Listener.
 
 
+
+
+ Buatkan sistem Gamifikasi berupa Daily Streak dan Badges Pencapaian pada aplikasi belajar Al-Qur'an Tamyiz, terintegrasi dengan Supabase dan tampilan UI Halaman Profil.
+
+Spesifikasi & Logika Fitur:
+
+1. METRIK & SKEMA DATABASE (SUPABASE):
+Tambahkan tabel dan kolom berikut di Supabase:
+- Tabel `user_streaks`:
+  - `user_id` (uuid, primary key, references auth.users.id)
+  - `current_streak` (integer, default: 0)
+  - `longest_streak` (integer, default: 0)
+  - `last_activity_date` (date)
+- Tabel `badges`:
+  - `id` (text, primary key, misal: 'streak_3_days', 'master_50_words', 'quiz_perfect')
+  - `title` (text), `description` (text), `icon_url` (text)
+- Tabel `user_badges`:
+  - `user_id` (uuid), `badge_id` (text), `unlocked_at` (timestamp)
+
+2. LOGIKA HITUNG DAILY STREAK:
+- Setiap kali pengguna menyelesaikan kuis/modul hari ini:
+  a. Ambil `last_activity_date` pengguna.
+  b. JIKA `last_activity_date` = HARI INI: Tidak ada perubahan streak (aktivitas harian sudah tercatat).
+  c. JIKA `last_activity_date` = KEMARIN: Tambahkan `current_streak` +1. Jika `current_streak` > `longest_streak`, perbarui `longest_streak`.
+  d. JIKA `last_activity_date` < KEMARIN (bolos 1 hari atau lebih): Reset `current_streak` menjadi 1.
+  e. Perbarui `last_activity_date` menjadi tanggal hari ini.
+
+3. LOGIKA UNLOCK BADGES (OTOMATIS):
+Jalankan fungsi pengecekan pemicu (trigger/function) setiap kali kuis selesai atau streak bertambah:
+- Badge "Semangat Pembelajar": Unlocked saat `current_streak` >= 3 hari.
+- Badge "Istiqomah 7 Hari": Unlocked saat `current_streak` >= 7 hari.
+- Badge "Penjelajah Tamyiz": Unlocked saat total `user_progress.is_completed` >= 5 modul.
+- Badge "Nilai Sempurna": Unlocked saat pengguna mendapat skor 100 pada kuis pertama kali.
+
+4. TAMPILAN UI (HALAMAN PROFIL & DASBOR):
+- Header Dasbor: Tampilkan ikon api/fire 🔥 dengan angka `current_streak` aktif di pojok atas layar utama.
+- Kartu Streak di Profil: Tampilkan status streak saat ini dan rekor streak terpanjang (`longest_streak`).
+- Grid Badges di Profil:
+  a. Tampilkan daftar semua badge dalam bentuk Grid (3-4 kolom).
+  b. Badge yang SUDAH terbuka (`user_badges`): Tampilkan dengan warna penuh (colored) beserta tanggal `unlocked_at`.
+  c. Badge yang BELUM terbuka: Tampilkan dengan efek *grayscale* / redup beserta indikator syarat untuk membukanya.
+  d. Ketika badge diklik, tampilkan modal/dialog penjelasan mengenai badge tersebut.
+
+5. EFEK ANIMASI & NOTIFIKASI:
+- Saat pengguna berhasil membuka badge baru atau menambah streak hari ini, tampilkan dialog perayaan Pop-up (Modal) lengkap dengan animasi selebrasi (confetti) dan suara selebrasi singkat.
+
+Buatkan kode terpisah untuk skrip SQL Supabase, fungsi kalkulasi streak, dan komponen UI React Native/Flutter-nya.
+
+
+Buatkan integrasi Push Notification Harian (Local Notification & Remote Push) untuk aplikasi belajar Al-Qur'an Tamyiz agar menjaga retensi pengguna dan mempertahankan Daily Streak.
+
+Spesifikasi & Logika Fitur:
+
+1. CONFIGURATION & PERMISSION (MOBILE & WEB):
+- Minta izin notifikasi (Notification Permission) saat pengguna pertama kali menyelesaikan modul kuis pertama atau di halaman Pengaturan Aplikasi.
+- Integrasikan pustaka notifikasi lokal (misalnya: Flutter Local Notifications / Expo Notifications).
+- Simpan Expo Push Token / FCM Token di tabel `users` pada Supabase untuk pengiriman notifikasi terpusat jika diperlukan.
+
+2. LOGIKA SCHEDULING LOCAL NOTIFICATION (OFFLINE FRIENDLY):
+- Jadwalkan Notifikasi Lokal harian di HP pengguna pada jam yang dapat disesuaikan (default: 20:00 WIB).
+- Logika Pembatalan/Pembaruan Otomatis:
+  a. JIKA pengguna SUDAH belajar hari ini (last_activity_date = hari ini): Batalkan notifikasi pengingat untuk malam hari ini, dan jadwalkan ulang untuk besok malam.
+  b. JIKA pengguna BELUM belajar hari ini hingga jam 19:00: Tampilkan notifikasi peringatan dengan konteks streak aktif pengguna.
+
+3. PESAN NOTIFIKASI DINAMIS (DYNAMIC TEMPLATES):
+Gunakan template pesan interaktif yang memuat status streak pengguna:
+- Peringatan Streak (Jika Streak > 0 dan belum belajar):
+  - Judul: "🔥 Rekor {current_streak} Hari Kamu Terancam Putus!"
+  - Pesan: "Luangkan 3 menit malam ini untuk belajar Tamyiz dan pertahankan streak-mu!"
+- Pengingat Biasa (Jika Streak = 0):
+  - Judul: "📖 Yuk, Mulai Langkah Pertamamu Hari Ini!"
+  - Pesan: "Pelajari 3 kata baru Al-Qur'an hari ini dengan metode Tamyiz."
+
+4. ACTION HANDLING (DEEP LINKING):
+- Ketika pengguna menekan/mengetuk notifikasi di HP:
+  a. Buka aplikasi secara langsung.
+  b. Arahkan pengguna (Deep Link / Navigation) langsung ke Halaman Modul Belajar Terakhir yang belum diselesaikan, bukan hanya ke halaman beranda.
+
+5. HALAMAN PENGATURAN NOTIFIKASI (SETTINGS UI):
+- Buat komponen sakelar (Toggle Switch) "Pengingat Belajar Harian" di Halaman Pengaturan.
+- Sediakan pemilih waktu (Time Picker) agar pengguna bebas menentukan jam pengingat harian mereka sendiri.
+
+Buatkan kode lengkap untuk konfigurasi pustaka notifikasi, fungsi penjadwalan dinamis, penanganan Deep Link, dan antarmuka Pengaturan Notifikasi.
+
+
+Buatkan halaman Admin Dashboard dan Content Management System (CMS) untuk aplikasi belajar Al-Qur'an Tamyiz pada rute `/admin`.
+
+Spesifikasi & Logika Fitur:
+
+1. ADMIN ACCESS CONTROL (ROLE-BASED RLS):
+- Proteksi rute `/admin` sehingga hanya dapat diakses oleh pengguna dengan `role = 'admin'` di database Supabase.
+- Tampilkan halaman "Access Denied (403)" jika pengguna biasa mencoba membuka URL rute ini.
+
+2. MANAJEMEN KOSA KATA & MODUL TAMYIZ (CONTENT MANAGEMENT):
+- Halaman Pengelolaan Modul & Kata:
+  a. Tampilkan tabel interaktif daftar kosa kata Tamyiz (`quran_words`) dengan fitur pencarian, filter berdasarkan kategori Tamyiz (Isim, Fi'il, Huruf), dan pagination.
+  b. Form Tambah/Edit Kata: Sediakan modal form untuk menginput teks Arab, terjemahan Indonesia, kategori warna Tamyiz, serta unggah file audio pelafalan ke Supabase Storage.
+  c. Preview Komponen: Sediakan komponen preview langsung untuk melihat tampilan kartu kata dengan kode warna Tamyiz sebelum disimpan.
+
+3. MANAJEMEN PENGGUNA & SUBSCRIPTION MANUAL OVERRIDE:
+- Halaman Pengelolaan User (`users` & `subscriptions`):
+  a. Tampilkan daftar pengguna terdaftar beserta status langganan mereka (Aktif/Gratis).
+  b. Sediakan tombol manual "Aktifkan Langganan Premium (30 Hari)" untuk membantu pengguna yang melakukan pembayaran manual atau mengalami kendala webhook.
+  c. Sediakan fitur pencarian pengguna berdasarkan email atau nama.
+
+4. RINGKASAN METRIK BISA DIPANTAU (ANALYTICS CARDS):
+Tampilkan 4 kartu ringkasan di bagian atas dasbor admin:
+- Total Pengguna Terdaftar (`users`).
+- Total Pengguna Premium Aktif (`subscriptions`).
+- Total Modul Selesai Dikerjakan Pengguna (`user_progress`).
+- Estimasi Pendapatan Bulan Ini (Total Transaksi Sukses x Rp10.000).
+
+5. UI/UX SPECIFICATION:
+Gunakan tata letak Sidebar Navigation (Navigasi Samping) dengan opsi menu: Ringkasan, Kelola Modul, Kelola User, dan Pengaturan. Tampilkan antarmuka yang bersih, responsif di desktop, serta dilengkapi loading state dan notifikasi toast saat operasi CRUD berhasil dilakukan.
+
+
+
+Act as a Mobile Release Engineer & Store Compliance Specialist. Help us configure production builds, multi-environment settings, and store compliance for our cross-platform Quran Tamyiz app.
+
+Deliverables & Technical Requirements:
+
+1. MULTI-ENVIRONMENT CONFIGURATION (STAGING VS PRODUCTION):
+- Setup environment configuration files (.env.staging and .env.production).
+- Implement dynamic switching for Supabase URLs, Anon Keys, and Payment Gateway credentials (Sandbox vs Production) based on the build target.
+
+2. STORE COMPLIANCE & BILLING ABSTRACTION:
+- Create a feature flag / abstraction layer for the payment flow:
+  a. WEB BUILD: Direct checkout link via Midtrans/Xendit (QRIS, E-Wallet).
+  b. MOBILE NATIVE BUILDS (Android & iOS): Prepare fallback logic for Google Play Billing & Apple In-App Purchase (IAP) to avoid app store rejection due to alternative payment policy violations.
+- Add required privacy & safety controls:
+  a. Account Deletion Request button in User Settings (mandatory for Google Play & App Store approval).
+  b. Dynamic Privacy Policy & Terms of Service modal/link.
+
+3. BUILD CONFIGURATION & OPTIMIZATION (EXPO / FLUTTER):
+- Mobile Android: Configure `app.json` / `build.gradle` for bundle optimization (AAB generation), app icon, splash screen, and permissions (Push Notifications, Audio Playback).
+- Mobile iOS: Set up Info.plist permissions, app icons, and background audio capabilities for Quran recitation.
+- Web/PWA: Configure manifest.json, service worker caching strategy for audio assets, and meta tags for SEO.
+
+4. AUTOMATED PRE-FLIGHT CHECKLIST SCRIPT:
+Write a simple diagnostic script or pre-build verification check that ensures:
+- All debug/console logs are stripped in production builds.
+- Critical production env variables are non-empty before initiating the build process.
+
+Provide the full configuration files, abstraction logic code, and setup steps for generating app binaries.
