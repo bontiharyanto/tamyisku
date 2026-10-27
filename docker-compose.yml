@@ -1,0 +1,15 @@
+# Frontend web only. Local Supabase is started separately with `supabase start`
+# and is published on the host at http://localhost:54321.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        EXPO_PUBLIC_SUPABASE_URL: http://localhost:54321
+        # Default local anon key printed by current Supabase CLI builds.
+        # Replace it with the value from `supabase status` if that command shows a different key.
+        EXPO_PUBLIC_SUPABASE_ANON_KEY: ${EXPO_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0}
+    ports:
+      - "8080:80"
+    restart: unless-stopped

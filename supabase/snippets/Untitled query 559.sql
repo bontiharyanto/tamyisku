@@ -1,0 +1,1 @@
+update public.users set role = 'admin' where email = 'bontih.haryanto@gmail.com';

@@ -1,0 +1,492 @@
+Act as a Senior Full-Stack Developer & Mobile App Architect. Build a cross-platform (Android, iOS, Web) Quran Learning Application based on the "Tamyiz" method (word-by-word grammar, color-coded categories, and interactive quizzes) with a monthly subscription system of IDR 10,000/month.
+
+### 1. TECH STACK & ARCHITECTURE
+- Frontend: Flutter or React Native (Expo) - Single codebase for Mobile (Android/iOS) and Web (PWA).
+- Backend & Database: Supabase (Use Free Tier specs: PostgreSQL, Authentication, Storage, Row Level Security).
+- Admin Panel: Web-based Admin Dashboard (integrated into the web frontend or separate route like /admin).
+- Payment Integration: Midtrans / Xendit (QRIS, E-Wallet, Transfer Bank) for Web, and In-App Purchase (Google Play & Apple IAP) for Mobile.
+
+### 2. CORE FEATURES & DATABASE SCHEMA
+Create the following database tables in Supabase with RLS (Row Level Security) enabled:
+- `users`: id, email, full_name, role (enum: 'user', 'admin'), created_at.
+- `subscriptions`: id, user_id, status (enum: 'active', 'inactive', 'expired'), start_date, end_date, payment_method, updated_at.
+- `quran_words`: id, surah_number, ayah_number, word_position, arabic_text, translation, tamyiz_category (Isim, Fi'il, Huruf, Tamyiz 1-4), color_code, audio_url.
+- `lessons`: id, title, level, category, description, order_index.
+- `quizzes`: id, lesson_id, question, options (JSON), correct_answer, score_points.
+- `user_progress`: id, user_id, lesson_id, is_completed, score, updated_at.
+
+### 3. SUBSCRIPTION & PAYMENT FLOW (IDR 10,000/month)
+- Implement active subscription checks middleware/guard for locked content.
+- Non-subscribed users can only access Lesson 1 (Free Trial).
+- Subscribed users get full access to all lessons and quizzes.
+- Web version integrates local payment gateway (Midtrans/Xendit) supporting QRIS and GoPay/OVO for IDR 10,000/month.
+- Automatically update `subscriptions` table upon successful payment webhook payload.
+
+### 4. CONTENT SECURITY & ANTI-PIRACY (CRITICAL)
+- Do NOT hardcode Quran text or audio locally in the app bundle. All data must be fetched dynamically from Supabase API using authorization tokens.
+- Secure media files: Store audio/video in private Supabase Storage buckets, accessed strictly via short-lived Signed URLs or HLS streaming.
+- Web Protection: Disable right-click, disable Developer Tools shortcuts (F12, Ctrl+Shift+I), and suppress video/audio direct download buttons.
+- Mobile App Protection: Enable screen protection (FLAG_SECURE on Android, iOS screen recording preventer) to block screenshotting and screen recording on lesson pages.
+
+### 5. ADMIN DASHBOARD ROUTE (/admin)
+- Accessible only by users with `role = 'admin'`.
+- Analytics Overview: Total active subscribers, total revenue monthly, daily active learners.
+- User Management: View user list, search users, manually activate/deactivate subscription status (for manual payments/testing).
+- Content Management (CMS): CRUD operations (Create, Read, Update, Delete) for lessons, Quran word data, color codes, and quiz questions.
+
+### 6. UI/UX REQUIREMENTS
+- Clean, modern, and mobile-friendly UI layout.
+- High-contrast color coding for Tamyiz grammar categories (e.g., Isim = Blue, Fi'il = Red, Huruf = Green).
+- Interactive quiz interface with immediate feedback, progress bar, and score summary.
+- Seamless authentication flow (Email/Password & Google Sign-In).
+
+Please generate the step-by-step project folder structure, database SQL migration script (including RLS policies), and the base app code.
+
+Siap mas, ini *PROMPT LENGKAP SIAP COPY-PASTE* untuk bikin aplikasi Tamyiz versi mas dari 0 sampai jadi. Saya bikinin 3 prompt utama, tinggal paste ke *Bolt.new / Lovable / Cursor* urutannya.
+
+---
+Buatkan panduan dan file konfigurasi Docker untuk proyek ini:
+
+1. SUPABASE LOCAL DEVELOPMENT (DOCKER):
+- Berikan perintah CLI untuk menginisialisasi dan menjalankan Supabase secara lokal menggunakan Docker Desktop (`supabase init` dan `supabase start`).
+- Buatkan file `supabase/config.toml` standar untuk kebutuhan testing lokal.
+
+2. DOCKERFILE UNTUK FRONTEND WEB (NEXT.JS / REACT):
+- Buatkan file `Dockerfile` multi-stage build yang efisien:
+  a. Stage 1 (Builder): Install dependency dan build aset web/PWA.
+  b. Stage 2 (Runner): Gunakan image `nginx:alpine` yang sangat ringan untuk melayani file statis web.
+- Buatkan file `docker-compose.yml` untuk menjalankan Frontend Web dan mengarahkannya ke Supabase Local (URL: http://localhost:54321).
+
+PROMPT 1: APLIKASI UTAMA (User App - Android, iOS, Web)
+
+Ini untuk aplikasi belajarnya yang dipakai santri. Copy paste ini ke *Bolt.new*:
+
+Build a complete Quran learning mobile & web app called "Tamyizku" using Flutter Web + Supabase.
+
+CONCEPT: Tamyiz Method - Learn Quran by memorizing most frequent words first. Like Duolingo but for Quran.
+
+CORE FEATURES:
+1. AUTH: Login/Register with email & Google using Supabase Auth. Save user profile.
+
+2. ONBOARDING: Test level - show 10 Arabic words, ask meaning, determine user level.
+
+3. DASHBOARD (Duolingo Style):
+- Streak counter, XP points, Level progress bar (Level 1-20)
+- Daily target: 5 new words
+- Green Islamic theme: #0E5A4A primary, #FFF8E7 background, #C9A86A accent
+
+4. LEARNING FLOW (Main Feature):
+- Flashcard: Show Arabic word (big), transliteration, meaning (hidden first)
+- Tap to reveal meaning
+- Audio button: Play murottal for that word in ayah context (use quran.com API, signed URL that expires in 5 min)
+- Buttons: "Lupa", "Ingat", "Sangat Ingat" (Spaced Repetition Algorithm)
+
+5. QUIZ:
+- Multiple choice: Arabic -> Indonesian meaning
+- Match words to ayah
+- Result screen with XP reward
+
+6. QURAN CONTEXT: After learning 10 words, show real ayah containing those words with highlighting.
+
+7. PAYWALL & SUBSCRIPTION Rp 10.000/month:
+- Free: Level 1-2 only (50 words)
+- Premium locked: Level 3-20. Show paywall screen.
+- Payment options:
+ A) Google Play Billing (use revenuecat)
+ B) QRIS/Midtrans for Web (cheaper) - button "Bayar via QRIS Rp 10rb (Hemat)"
+- On successful payment via Midtrans webhook, update supabase table `subscriptions` is_active=true
+
+8. SECURITY (Anti-download):
+- Disable screenshot using FLAG_SECURE
+- Disable text copy/long-press on Arabic & meaning
+- Add watermark with user email floating transparent on all learning screens: "user@email.com"
+- All content fetched per lesson from Supabase via API, never store full JSON locally
+- Audio URLs are signed and expire
+
+9. TECH STACK:
+- Frontend: Flutter (responsive for Web + APK + IPA)
+- Backend: Supabase (Postgres, Auth, RLS)
+- Payment: RevenueCat + Midtrans
+- State: Riverpod
+
+Make it fully functional with mock data for 100 Quran keywords.
+
+DATABASE SCHEMA (Supabase):
+- table `keywords` (id, arabic, transliteration, meaning_id, level, frequency, example_ayah_id)
+- table `user_progress` (user_id, keyword_id, mastery_level, next_review_date)
+- table `subscriptions` (user_id, is_active, start_date, end_date, payment_method)
+- Enable RLS: Only premium users can fetch level >2
+
+PROMPT 2: BACKEND ADMIN SYSTEM (Untuk Mas & Ustadz)
+
+Paste ini di project baru di *Lovable / http://Bolt.new* dengan judul "Tamyizku Admin":
+
+Build a SaaS Admin Dashboard for Quran Tamyiz app called "Tamyizku Admin" using Next.js 14 + shadcn/ui + Supabase.
+
+URL: admin.tamyizku.com
+
+FEATURES:
+1. AUTH: Admin login only (role: super_admin, content_admin). Use Supabase Auth with role check.
+
+2. DASHBOARD HOME:
+- Cards: Total Users, Active Premium Users, Monthly Revenue (Rp 10rb * active subs), Total Keywords
+- Chart: Daily new users (last 30 days) using Tremor/Recharts
+- Recent transactions table from Midtrans
+
+3. CONTENT MANAGEMENT (Most Important):
+- CRUD for table `keywords`: Form with Arabic input (RTL), transliteration, meaning, level (1-20), frequency rank, example ayah (link to quran.com), audio file upload
+- Bulk import via CSV
+- Drag & drop to reorder keywords per level
+- Preview how it looks in mobile app
+
+4. USER MANAGEMENT:
+- Table of all users with search: email, level, streak, subscription status
+- Click user -> Detail: progress, words memorized, subscription history
+- Buttons: "Extend Subscription", "Ban User", "Reset Progress"
+
+5. FINANCE / SUBSCRIPTION:
+- Table `subscriptions` + `transactions` from Midtrans webhook
+- Filter by status, payment method (QRIS, GoPay, PlayStore)
+- Button "Approve Manual Payment" for QRIS transfer
+- Export to Excel
+
+6. SETTINGS:
+- Manage levels: Level name, words required to unlock
+- Manage daily notifications text
+
+TECH: Next.js, Tailwind, shadcn, Supabase client, RLS disabled for admin (service_role key). Make it clean like Linear dashboard.
+
+PROMPT 3: SUPABASE SQL + SECURITY (Paste di Supabase SQL Editor)
+
+Ini biar backend aman dan tidak bisa di-download:
+
+-- Buat tabel
+create table keywords (
+ id uuid primary key default gen_random_uuid(),
+ arabic text not null,
+ transliteration text,
+ meaning_id text not null,
+ level int not null,
+ frequency int,
+ example_ayah text,
+ audio_url text,
+ created_at timestamp default now()
+);
+
+create table user_progress (
+ user_id uuid references auth.users,
+ keyword_id uuid references keywords,
+ mastery int default 0,
+ next_review date,
+ primary key (user_id, keyword_id)
+);
+
+create table subscriptions (
+ user_id uuid references auth.users primary key,
+ is_active boolean default false,
+ end_date date,
+ payment_method text
+);
+
+-- Aktifkan RLS (Anti download massal)
+alter table keywords enable row level security;
+create policy "Free can access level 1-2"
+ on keywords for select
+ using (level <= 2 OR EXISTS (select 1 from subscriptions where user_id = auth.uid() AND is_active = true));
+
+create policy "User progress only own"
+ on user_progress for all
+ using (user_id = auth.uid());
+
+-- Function untuk signed audio URL (expire 5 menit)
+create or replace function get_secure_audio(keyword_id uuid)
+returns text language plpgsql security definer as $$
+begin
+ -- cek langganan dulu
+ return (select audio_url from keywords where id = keyword_id);
+end $$;
+
+CARA EKSEKUSI URUTAN:
+
+1. *Hari 1:* Buka `supabase.com` -> Buat project gratis -> Paste *PROMPT 3* di SQL Editor
+2. *Hari 1-3:* Buka `bolt.new` -> Paste *PROMPT 1* -> Jadi aplikasi Web + APK
+3. *Hari 4:* Buka project baru di http://Bolt.new -> Paste *PROMPT 2* -> Jadi Admin Panel
+4. *Hari 5:* Daftar `midtrans.com` + `revenuecat.com` (gratis) -> Masukkan API key ke app
+5. *Hari 6:* Publish Web ke Vercel (1 klik)
+
+*Bonus Prompt untuk Anti-Download Audio:*
+
+Tambahin ini di PROMPT 1 kalau audio masih bisa di-download:
+
+Implement audio security: Do not use direct mp3 URL. Create Supabase Edge Function `getAudio` that checks subscription and returns temporary signed URL from Cloudflare R2 with 5 min expiry. Use HLS streaming, not direct file.
+
+Mas tinggal copy 3 prompt di atas, urutannya sudah saya sesuaikan biar tidak bingung.
+
+Mau saya bikinin juga *file CSV 500 kata Tamyiz paling sering muncul di Quran* (Arab + Arti + Level) biar mas bisa langsung import ke Supabase dan langsung bisa dipakai belajar?
+
+
+Agar hasil akhir rapi, tidak membingungkan AI, dan meminimalkan *bug*, jangan langsung memasukkan seluruh prompt dalam satu kali tekan tombol. Eksekusi dilakukan secara **bertahap (modular)**.
+
+Berikut adalah alur dan urutan eksekusi yang paling efektif saat menggunakan tool *vibe coding* seperti Cursor, Lovable, Windsurf, atau Bolt.new:
+
+---
+
+### Phase 1: Setup Fondasi & Backend Database (Supabase)
+
+Jalankan persiapan backend terlebih dahulu agar aplikasi punya "wadah" data sebelum tampilan UI dibuat.
+
+1. **Buat Project Supabase:**
+* Buat akun dan project baru di dashboard Supabase (Free Tier).
+
+
+2. **Eksekusi SQL Migration & RLS:**
+* Masukkan bagian **`2. CORE FEATURES & DATABASE SCHEMA`** ke tool AI atau langsung ke *SQL Editor* di Supabase.
+* Pastikan tabel `users`, `subscriptions`, `quran_words`, `lessons`, dan `quizzes` terbuat beserta aturan keamanannya (RLS).
+
+
+3. **Konfigurasi Environment Variables:**
+* Dapatkan `SUPABASE_URL` dan `SUPABASE_ANON_KEY` dari dashboard Supabase, lalu minta AI membuatkan file `.env` di project lokal.
+
+
+
+---
+
+### Phase 2: Inisialisasi Project Frontend & UI Dasar
+
+Gunakan prompt untuk membentuk struktur aplikasi dan halaman utama.
+
+1. **Inisialisasi Project:**
+* Minta AI membuat project awal (Flutter/Expo React Native): *"Buatkan struktur folder project dasar dengan integrasi Supabase SDK."*
+
+
+2. **Authentication Flow (Sign Up / Login):**
+* Minta AI membuat halaman Login & Register (Email & Google Auth).
+* Tes hingga user bisa *login* dan datanya tersimpan di tabel `users` Supabase.
+
+
+3. **UI Utama & Pembelajaran Tamyiz:**
+* Masukkan bagian **`6. UI/UX REQUIREMENTS`**.
+* Minta AI membuat halaman daftar surah/modul dan tampilan kata per kata dengan kode warna khas Tamyiz (Isim, Fi'il, Huruf).
+
+
+
+---
+
+### Phase 3: Implementasi Sistem Langganan & Fitur Keamanan
+
+Tambahkan logika pembayaran dan proteksi konten setelah UI dasar berfungsi.
+
+1. **Fitur Kuis & Pengunci Konten (Subscription Guard):**
+* Minta AI membuat logika pembatas: user gratis hanya bisa buka Modul 1, sedangkan modul lainnya terkunci jika status `subscriptions` tidak aktif.
+
+
+2. **Integrasi Payment Gateway:**
+* Masukkan bagian **`3. SUBSCRIPTION & PAYMENT FLOW`**.
+* Hubungkan webhook Midtrans/Xendit ke Supabase Edge Functions untuk mengubah status `subscriptions` menjadi `active` secara otomatis saat pembayaran Rp10.000 berhasil.
+
+
+3. **Proteksi Konten (Anti-Piracy):**
+* Masukkan bagian **`4. CONTENT SECURITY & ANTI-PIRACY`**.
+* Aktifkan *screen protection* (anti-screenshot/recording) di mobile app serta matikan klik kanan & fitur *inspect* untuk versi web.
+
+
+
+---
+
+### Phase 4: Pembuatan Dashboard Admin
+
+Langkah terakhir adalah membangun sistem pengelola aplikasi.
+
+1. **Routing & Role Protection:**
+* Masukkan bagian **`5. ADMIN DASHBOARD ROUTE (/admin)`**.
+* Buat aturan agar halaman `/admin` hanya bisa dibuka jika akun yang login memiliki `role = 'admin'`.
+
+
+2. **Fitur CMS & Manajerial:**
+* Minta AI membuat form untuk menginput data kata per kata Tamyiz, membuat kuis baru, serta tombol manual untuk mengaktifkan status langganan user.
+
+
+
+Buatkan komponen UI halaman belajar Al-Qur'an kata per kata menggunakan metode Tamyiz. 
+
+Spesifikasi & Logika Komponen:
+
+1. TAMPILAN KATA PER KATA (WORD-BY-WORD GRID):
+- Tampilkan ayat Al-Qur'an dalam bentuk kartu (cards) yang tersusun secara RTL (Right-to-Left) mengikuti arah bacaan Arab.
+- Setiap kartu kata terdiri dari 3 bagian vertikal:
+  a. Teks Arab (Font tajwid/Uthmani yang jelas & besar, misal: Amiri Quran).
+  b. Terjemahan bahasa Indonesia di bawah teks Arab.
+  c. Label Kategori Tamyiz di bagian paling bawah (misal: "Isim", "Fi'il", "Huruf", "Tamyiz 1").
+
+2. KODE WARNA TAMYIZ (DYNAMIC COLOR CODING):
+Berdasarkan field `tamyiz_category` dari database, berikan warna latar belakang/border yang berbeda pada setiap kartu kata:
+- Isim: Latar biru muda (#E3F2FD) dengan border biru (#1976D2).
+- Fi'il: Latar merah muda (#FFEBEE) dengan border merah (#D32F2F).
+- Huruf: Latar hijau muda (#E8F5E9) dengan border hijau (#388E3C).
+- Kosa Kata Tamyiz/Berulang: Latar kuning muda (#FFFDE7) dengan border kuning/emas (#FBC02D).
+
+3. FITUR INTERAKTIF & AUDIO:
+- Ketika kartu kata diklik, putar audio pengucapan kata tersebut dari `audio_url`.
+- Tambahkan tombol "Play Semua Audio Ayat" di bagian atas halaman untuk memutar audio kata secara berurutan.
+
+4. MOCK DATA UNTUK TESTING:
+Gunakan mock data berikut untuk merender tampilan awal:
+[
+  { "word_position": 1, "arabic_text": "BISMILLAH_ARABIC", "translation": "Dengan menyebut nama", "tamyiz_category": "Huruf", "audio_url": "https://example.com/audio1.mp3" },
+  { "word_position": 2, "arabic_text": "ALLAH_ARABIC", "translation": "Allah", "tamyiz_category": "Isim", "audio_url": "https://example.com/audio2.mp3" },
+  { "word_position": 3, "arabic_text": "AR-RAHMAN_ARABIC", "translation": "Yang Maha Pengasih", "tamyiz_category": "Tamyiz 1", "audio_url": "https://example.com/audio3.mp3" }
+]
+
+Buatkan komponen ini agar responsif di HP (layout wrap/grid) dan ikuti kaidah UI yang bersih serta modern.
+
+Buatkan komponen UI Halaman Kuis Interaktif untuk aplikasi belajar Al-Qur'an metode Tamyiz. 
+
+Spesifikasi & Logika Kuis:
+
+1. TAMPILAN PERTANYAAN (QUESTION CARD):
+- Tampilkan 1 kata Al-Qur'an ukuran besar di tengah layar (Font Arab Uthmani/Amiri).
+- Tampilkan terjemahan kata tersebut di bawah teks Arab.
+- Sediakan tombol audio di dekat teks Arab untuk mendengarkan pelafalan kata dari field `audio_url`.
+- Tambahkan Progress Bar di bagian atas (misal: "Pertanyaan 3 dari 10").
+
+2. PILIHAN JAWABAN (MULTIPLE CHOICE):
+- Sediakan 4 tombol pilihan jawaban kategori Tamyiz:
+  1. Isim (Kata Benda)
+  2. Fi'il (Kata Kerja)
+  3. Huruf (Kata Sambung/Tugas)
+  4. Tamyiz / Kosa Kata Berulang
+- Tata letak pilihan jawaban: Grid 2x2 yang responsif di HP dan Web.
+
+3. LOGIKA FEEDBACK & SKOR (INTERACTION):
+- Ketika pengguna memilih salah satu jawaban:
+  a. JIKA BENAR: Ubah warna tombol yang dipilih menjadi hijau, putar efek suara "benar" (sfx), tampilkan penjelasan singkat warna Tamyiz-nya, dan tambahkan skor (+10).
+  b. JIKA SALAH: Ubah warna tombol yang dipilih menjadi merah, kunci jawaban, lalu sorot tombol jawaban yang BENAR dengan warna hijau.
+- Tampilkan tombol "Lanjut ke Soal Berikutnya" setelah pengguna memilih jawaban.
+
+4. HALAMAN HASIL (RESULT SCREEN):
+- Setelah semua soal selesai, tampilkan rangkuman:
+  a. Total Skor Akhir dan Persentase Akurasi (misal: 80/100).
+  b. Pesan motivasi berdasarkan skor (misal: "Luar Biasa!", "Bagus, Tingkatkan Lagi!").
+  c. Tombol "Coba Lagi" dan "Kembali ke Menu Utama".
+- Simpan data kelulusan kuis ini ke tabel `user_progress` di Supabase.
+
+5. MOCK DATA UNTUK TESTING:
+Gunakan mock data berikut untuk testing komponen:
+[
+  {
+    "id": 1,
+    "arabic_text": "KATA_ARAB_1",
+    "translation": "Menciptakan",
+    "audio_url": "https://example.com/audio1.mp3",
+    "correct_category": "Fi'il",
+    "explanation": "Kata ini termasuk Fi'il (Kata Kerja) dengan kode warna Merah."
+  },
+  {
+    "id": 2,
+    "arabic_text": "KATA_ARAB_2",
+    "translation": "Bumi",
+    "audio_url": "https://example.com/audio2.mp3",
+    "correct_category": "Isim",
+    "explanation": "Kata ini termasuk Isim (Kata Benda) dengan kode warna Biru."
+  }
+]
+
+Desain komponen ini menggunakan animasi transisi yang halus (smooth transitions) dan tata letak yang ramah pengguna di perangkat seluler.
+
+Buatkan logika integrasi backend Supabase pada aplikasi untuk mengirim dan menyimpan hasil skor kuis dari frontend ke tabel `user_progress`.
+
+Spesifikasi & Logika Penyimpanan:
+
+1. SKEMA TABEL SUPABASE (`user_progress`):
+Pastikan query mengacu pada struktur tabel berikut:
+- `id` (uuid, primary key, default: gen_random_uuid())
+- `user_id` (uuid, references auth.users.id)
+- `lesson_id` (uuid, references lessons.id)
+- `score` (integer)
+- `is_completed` (boolean, default: false)
+- `updated_at` (timestamp with time zone, default: now())
+
+2. LOGIKA PENYIMPANAN DATA (UPSERT):
+- Panggil fungsi penyimpanan ketika pengguna menekan tombol "Selesai" atau pada slide akhir kuis (Result Screen).
+- Dapatkan `user_id` dari sesi autentikasi pengguna yang sedang aktif (`supabase.auth.getUser()`).
+- Gunakan metode UPSERT (Insert/Update) berdasarkan `user_id` dan `lesson_id`:
+  a. JIKA pengguna belum pernah mengambil kuis ini: Buat record baru di `user_progress`.
+  b. JIKA pengguna sudah pernah mengambil kuis ini: Perbarui (update) record yang ada HANYA JIKA `score` baru lebih tinggi dari `score` sebelumnya (High Score Retention).
+- Tentukan nilai `is_completed = true` jika skor mencapai ambang batas minimal kelulusan (misalnya skor >= 70).
+
+3. HANDLING ERROR & INDIKATOR UI:
+- Tampilkan indikator pemuatan (Loading Spinner / Skeleton) pada tombol saat proses penyimpanan berlangsung.
+- Tampilkan notifikasi Toast/Snackbar jika penyimpanan berhasil ("Skor berhasil disimpan!").
+- Berikan penanganan error yang baik (try-catch): Jika koneksi gagal atau token kedaluwarsa, tampilkan pesan error yang jelas dan sediakan tombol "Coba Lagi Simpan".
+
+4. KODE CONTOH / INTEGRASI (FUNCTION):
+Buatkan fungsi terpisah bernama `saveQuizProgress({ lessonId, finalScore, passingScore = 70 })` menggunakan Supabase Client JavaScript/Dart SDK yang modular dan dapat dipanggil ulang di modul kuis lainnya.
+
+Buatkan halaman Profil Pengguna (User Profile) yang menampilkan informasi akun, statistik belajar, dan riwayat kuis interaktif berdasarkan data dari Supabase.
+
+Spesifikasi & Logika Komponen:
+
+1. HEADER PROFIL (USER INFO):
+- Tampilkan foto profil/avatar pengguna, nama lengkap (`full_name`), dan email dari `supabase.auth.getUser()`.
+- Tampilkan badge status langganan berdasarkan data tabel `subscriptions`:
+  a. Aktif (Badge Hijau): "Member Premium Tamyiz" (beserta tanggal berakhirnya langganan).
+  b. Tidak Aktif/Expired (Badge Abu-abu/Oranye): "Akun Gratis" + Tombol "Upgrade Rp10rb/Bulan".
+- Sediakan tombol "Edit Profil" dan tombol "Keluar" (Logout).
+
+2. DASHBOARD STATISTIK (LEARNING STATS):
+Tampilkan 3 kartu ringkasan statistik (Stats Cards) di bagian atas:
+- Total Modul Selesai: Hitung jumlah record di `user_progress` di mana `is_completed = true`.
+- Rata-rata Skor Kuis: Hitung nilai rata-rata dari kolom `score` di tabel `user_progress`.
+- Total Kata Terkuasai: Kalkulasi estimasi kata Al-Qur'an yang sudah dipelajari dari kuis yang lulus.
+
+3. RIWAYAT KUIS (QUIZ HISTORY LIST):
+- Ambil data dari tabel `user_progress` yang di-join dengan tabel `lessons` berdasarkan `user_id` yang sedang login.
+- Tampilkan daftar kartu riwayat kuis secara kronologis (diurutkan dari `updated_at` terbaru):
+  a. Judul Modul / Kuis.
+  b. Skor Akhir (misal: "80 / 100").
+  c. Status Kelulusan (Badge "Lulus" jika score >= 70, Badge "Coba Lagi" jika < 70).
+  d. Tanggal/Waktu pengerjaan kuis.
+- Sediakan tombol "Ulangi Kuis" di setiap kartu riwayat.
+
+4. STATE HANDLING & QUERY SUPABASE:
+- Gunakan Supabase Client SDK untuk mengambil data secara efisien.
+- Tampilkan komponen Skeleton Loader saat data statistik dan riwayat sedang dimuat (loading state).
+- Tampilkan indikator "Belum ada riwayat kuis" jika tabel `user_progress` masih kosong.
+
+Buatkan halaman ini dengan tampilan UI yang rapi, modern, dan penuh responsivitas untuk layar seluler maupun web.
+
+Buatkan integrasi sistem pembayaran langganan Rp10.000/bulan menggunakan Supabase Edge Functions dan Payment Gateway (Midtrans/Xendit).
+
+Spesifikasi & Logika Integrasi:
+
+1. FRONTEND (Tombol Upgrade di Halaman Profil):
+- Ketika user menekan tombol "Upgrade Rp10rb/Bulan", jalankan fungsi `createCheckoutSession()`.
+- Panggil Supabase Edge Function bernama `create-payment`.
+- Tampilkan loading overlay saat memproses URL transaksi.
+- Buka URL pembayaran dari response Edge Function (menggunakan Pop-up / Webview / External Browser).
+
+2. BACKEND (Supabase Edge Function - `create-payment`):
+- Buat Edge Function menggunakan Deno/TypeScript.
+- Ambil `user_id` dan `email` dari auth header request.
+- Panggil API Payment Gateway (Midtrans Snap / Xendit Invoice) dengan parameter:
+  a. amount: 10000 (IDR)
+  b. item_details: "Langganan Bulanan Aplikasi Tamyiz (1 Bulan)"
+  c. customer_details: email & user_id
+- Kembalikan response JSON berisi `payment_url` / `snap_token`.
+
+3. WEBHOOK HANDLING (Supabase Edge Function - `payment-webhook`):
+- Buat Edge Function terpisah untuk menerima HTTP POST callback dari Midtrans/Xendit.
+- Verifikasi signature/token keamanan callback.
+- Jika status transaksi = 'settlement' / 'paid':
+  a. Lakukan UPSERT ke tabel `subscriptions` di Supabase.
+  b. Set status = 'active'.
+  c. Set start_date = waktu sekarang, end_date = waktu sekarang + 30 hari.
+- Kembalikan response HTTP 200 OK ke payment gateway.
+
+4. REALTIME STATE REFRESH (FRONTEND):
+- Gunakan Supabase Realtime Subscription pada tabel `subscriptions` di mana `user_id = current_user.id`.
+- Begitu data ter-update dari webhook, otomatis ubah status UI dari "Akun Gratis" menjadi "Member Premium" tanpa perlu reload aplikasi.
+
+Buatkan kode lengkap untuk komponen Frontend, Supabase Edge Function (`create-payment` & `payment-webhook`), dan penanganan Supabase Realtime Listener.
+
+

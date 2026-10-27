@@ -1,0 +1,301 @@
+[
+  {
+    "surah_number": 1,
+    "ayah_number": 1,
+    "skill_level": 1,
+    "formula_key": null,
+    "prompt": "Pada kata tertulis $\\text{بِسْمِ}$ di QS Al-Fatihah 1:1, suku $\\text{بِ}$ masuk kelas apa?",
+    "highlighted_word": "بِسْمِ",
+    "verse_words": [
+      { "arabic": "بِسْمِ", "category": "Campuran", "translation": "dengan nama", "audio_url": "https://audio.qurancdn.com/wbw/001_001_001.mp3" },
+      { "arabic": "ٱللَّهِ", "category": "Isim", "translation": "Allah", "audio_url": "https://audio.qurancdn.com/wbw/001_001_002.mp3" },
+      { "arabic": "ٱلرَّحْمَـٰنِ", "category": "Isim", "translation": "Maha Pengasih", "audio_url": "https://audio.qurancdn.com/wbw/001_001_003.mp3" },
+      { "arabic": "ٱلرَّحِيمِ", "category": "Isim", "translation": "Maha Penyayang", "audio_url": "https://audio.qurancdn.com/wbw/001_001_004.mp3" }
+    ],
+    "options": [
+      "Huruf jar · hijau · suku بِ menjarkan isim yang tertulis menyatu dalam kata yang sama",
+      "Isim · biru · seluruh بِسْمِ dianggap satu isim bertanwin",
+      "Fi'il madhi · merah · basmalah dianggap pekerjaan yang sudah selesai",
+      "Isim dhamir · biru · suku بِ dianggap kata ganti"
+    ],
+    "option_rationales": [
+      "بِ adalah huruf jar. Isimnya tertulis menyatu dalam kata mushaf بِسْمِ, bukan sebagai kata terpisah sesudahnya. Kartu campuran menandai dua kelas dalam satu kata tertulis.",
+      "بِسْمِ tidak bertanwin. Tanwin bukan tanda pada kata ini.",
+      "Tidak ada fi'il pada basmalah ayat ini.",
+      "بِ partikel, bukan kata ganti. Kata ganti tidak berbentuk ba kasrah."
+    ],
+    "correct_answer": "Huruf jar · hijau · suku بِ menjarkan isim yang tertulis menyatu dalam kata yang sama",
+    "explanation": "بِ huruf jar. Isim yang dijarkan tertulis menyatu di dalam بِسْمِ. Kata mushaf berikutnya adalah ٱللَّهِ, bukan pecahan nama.",
+    "audio_url": "https://audio.qurancdn.com/wbw/001_001_001.mp3",
+    "order_index": 1
+  },
+  {
+    "surah_number": 1,
+    "ayah_number": 2,
+    "skill_level": 2,
+    "formula_key": null,
+    "prompt": "Mengapa ٱلْحَمْدُ pada QS Al-Fatihah 1:2 dikartu biru?",
+    "highlighted_word": "ٱلْحَمْدُ",
+    "verse_words": [
+      { "arabic": "ٱلْحَمْدُ", "category": "Isim", "translation": "segala puji", "audio_url": "https://audio.qurancdn.com/wbw/001_002_001.mp3" },
+      { "arabic": "لِلَّهِ", "category": "Campuran", "translation": "bagi Allah", "audio_url": "https://audio.qurancdn.com/wbw/001_002_002.mp3" },
+      { "arabic": "رَبِّ", "category": "Isim", "translation": "Tuhan", "audio_url": "https://audio.qurancdn.com/wbw/001_002_003.mp3" },
+      { "arabic": "ٱلْعَـٰلَمِينَ", "category": "Isim", "translation": "seluruh alam", "audio_url": "https://audio.qurancdn.com/wbw/001_002_004.mp3" }
+    ],
+    "options": [
+      "Isim · biru · alif-lam pada awal kata, dan kata itu mubtada",
+      "Fi'il mudhari' · merah · alif-lam dianggap awalan kata kerja",
+      "Huruf · hijau · alif-lam dianggap partikel yang terlepas dari badannya",
+      "Fi'il madhi · merah · makna pujian dianggap pekerjaan memuji"
+    ],
+    "option_rationales": [
+      "Alif-lam adalah tanda isim. ٱلْحَمْدُ berarti segala puji dan menjadi mubtada. لِلَّهِ satu kata tertulis yang berisi huruf jar dan isim, maka kartunya campuran.",
+      "Awalan fi'il mudhari' adalah alif, ta, ya, atau nun, bukan alif-lam.",
+      "Alif-lam di sini bagian dari isim ma'rifat, bukan kartu huruf yang berdiri sendiri.",
+      "Fi'il memuji tidak berbentuk ٱلْحَمْدُ. Contoh fi'il madhinya حَمِدَ."
+    ],
+    "correct_answer": "Isim · biru · alif-lam pada awal kata, dan kata itu mubtada",
+    "explanation": "ٱلْحَمْدُ isim karena alif-lam. Artinya segala puji. Kartunya biru.",
+    "audio_url": "https://audio.qurancdn.com/wbw/001_002_001.mp3",
+    "order_index": 2
+  },
+  {
+    "surah_number": 1,
+    "ayah_number": 5,
+    "skill_level": 2,
+    "formula_key": null,
+    "prompt": "Kelas dan waktu نَعْبُدُ pada QS Al-Fatihah 1:5 adalah…",
+    "highlighted_word": "نَعْبُدُ",
+    "verse_words": [
+      { "arabic": "إِيَّاكَ", "category": "Isim", "translation": "kepada-Mu", "audio_url": "https://audio.qurancdn.com/wbw/001_005_001.mp3" },
+      { "arabic": "نَعْبُدُ", "category": "Fi'il", "translation": "kami menyembah", "audio_url": "https://audio.qurancdn.com/wbw/001_005_002.mp3" },
+      { "arabic": "وَإِيَّاكَ", "category": "Campuran", "translation": "dan kepada-Mu", "audio_url": "https://audio.qurancdn.com/wbw/001_005_003.mp3" },
+      { "arabic": "نَسْتَعِينُ", "category": "Fi'il", "translation": "kami memohon pertolongan", "audio_url": "https://audio.qurancdn.com/wbw/001_005_004.mp3" }
+    ],
+    "options": [
+      "Fi'il mudhari' · merah · nun untuk kami dan dhammah rafa', artinya kami menyembah",
+      "Isim · biru · dianggap masdar ibadah karena tidak ada alif-lam",
+      "Fi'il madhi · merah · dianggap sudah selesai, setara عَبَدْنَا",
+      "Huruf · hijau · nun dianggap partikel penegas"
+    ],
+    "option_rationales": [
+      "Nun di awal adalah tanda mudhari' untuk kami. Dhammah menandai rafa'. Artinya kami menyembah. Kartu fi'il berwarna merah. وَإِيَّاكَ tetap satu kata tertulis: huruf waw dan isim.",
+      "Masdar ibadah adalah عِبَادَةٌ. نَعْبُدُ fi'il.",
+      "Madhi untuk kami adalah عَبَدْنَا. Ayat ini memakai mudhari'.",
+      "Nun di sini awalan fi'il, bukan huruf yang berdiri sendiri."
+    ],
+    "correct_answer": "Fi'il mudhari' · merah · nun untuk kami dan dhammah rafa', artinya kami menyembah",
+    "explanation": "نَعْبُدُ fi'il mudhari', artinya kami menyembah. Kartunya merah. Kata mushaf sebelumnya adalah إِيَّاكَ, dan sesudahnya وَإِيَّاكَ utuh.",
+    "audio_url": "https://audio.qurancdn.com/wbw/001_005_002.mp3",
+    "order_index": 3
+  },
+  {
+    "surah_number": 1,
+    "ayah_number": 3,
+    "skill_level": 3,
+    "formula_key": null,
+    "prompt": "Arti ٱلرَّحِيمِ pada QS Al-Fatihah 1:3 adalah…",
+    "highlighted_word": "ٱلرَّحِيمِ",
+    "verse_words": [
+      { "arabic": "ٱلرَّحْمَـٰنِ", "category": "Isim", "translation": "Yang Maha Pengasih", "audio_url": "https://audio.qurancdn.com/wbw/001_003_001.mp3" },
+      { "arabic": "ٱلرَّحِيمِ", "category": "Isim", "translation": "Yang Maha Penyayang", "audio_url": "https://audio.qurancdn.com/wbw/001_003_002.mp3" }
+    ],
+    "options": [
+      "Yang Maha Penyayang · isim biru · alif-lam pada ٱلرَّحِيمِ",
+      "Yang Maha Pengasih · isim biru · arti itu milik ٱلرَّحْمَـٰنِ",
+      "Dia menyayangi · fi'il merah · dianggap mudhari' karena bermakna kerja",
+      "kepada · huruf hijau · dianggap huruf jar"
+    ],
+    "option_rationales": [
+      "ٱلرَّحِيمِ isim ber-alif-lam. Artinya Yang Maha Penyayang.",
+      "Yang Maha Pengasih adalah arti ٱلرَّحْمَـٰنِ, kata tertulis sebelumnya.",
+      "Makna sifat tidak mengubahnya menjadi fi'il.",
+      "Kata ini bukan partikel. Alif-lam menandainya sebagai isim."
+    ],
+    "correct_answer": "Yang Maha Penyayang · isim biru · alif-lam pada ٱلرَّحِيمِ",
+    "explanation": "ٱلرَّحِيمِ berarti Yang Maha Penyayang. ٱلرَّحْمَـٰنِ berarti Yang Maha Pengasih. Keduanya isim.",
+    "audio_url": "https://audio.qurancdn.com/wbw/001_003_002.mp3",
+    "order_index": 4
+  },
+  {
+    "surah_number": 1,
+    "ayah_number": 1,
+    "skill_level": 1,
+    "formula_key": null,
+    "prompt": "Rumus yang benar untuk kata tertulis بِسْمِ pada QS Al-Fatihah 1:1 adalah…",
+    "highlighted_word": "بِسْمِ",
+    "verse_words": [
+      { "arabic": "بِسْمِ", "category": "Campuran", "translation": "dengan nama", "audio_url": "https://audio.qurancdn.com/wbw/001_001_001.mp3" },
+      { "arabic": "ٱللَّهِ", "category": "Isim", "translation": "Allah", "audio_url": "https://audio.qurancdn.com/wbw/001_001_002.mp3" },
+      { "arabic": "ٱلرَّحْمَـٰنِ", "category": "Isim", "translation": "Yang Maha Pengasih", "audio_url": "https://audio.qurancdn.com/wbw/001_001_003.mp3" },
+      { "arabic": "ٱلرَّحِيمِ", "category": "Isim", "translation": "Yang Maha Penyayang", "audio_url": "https://audio.qurancdn.com/wbw/001_001_004.mp3" }
+    ],
+    "options": [
+      "Huruf jar lalu isim · keduanya tertulis dalam satu kata بِسْمِ",
+      "Satu fi'il · seluruh بِسْمِ dianggap kata kerja",
+      "Huruf pada ٱللَّهِ · nama Allah dianggap partikel",
+      "Isim pada suku بِ · kasrah dianggap tanwin"
+    ],
+    "option_rationales": [
+      "Rumusnya huruf jar بِ lalu isim. Mushaf menuliskannya dalam satu kata, بِسْمِ. Karena itu kartunya campuran, bukan kartu hijau atau biru saja.",
+      "Tidak ada fi'il pada kata ini.",
+      "ٱللَّهِ isim, nama Allah, dengan alif-lam.",
+      "Kasrah pada بِ adalah harakat huruf jar, bukan tanwin isim."
+    ],
+    "correct_answer": "Huruf jar lalu isim · keduanya tertulis dalam satu kata بِسْمِ",
+    "explanation": "بِسْمِ satu kata mushaf. Di dalamnya ada huruf jar dan isim. Nama lagu tidak dipakai, karena rumus yang pasti adalah kelas dua unsur itu.",
+    "audio_url": "https://audio.qurancdn.com/wbw/001_001_001.mp3",
+    "order_index": 5
+  },
+  {
+    "surah_number": 2,
+    "ayah_number": 2,
+    "skill_level": 1,
+    "formula_key": null,
+    "prompt": "Pada kata tertulis فِيهِ di QS Al-Baqarah 2:2, suku فِي masuk kelas apa?",
+    "highlighted_word": "فِيهِ",
+    "verse_words": [
+      { "arabic": "ذَٰلِكَ", "category": "Isim", "translation": "itu", "audio_url": "https://audio.qurancdn.com/wbw/002_002_001.mp3" },
+      { "arabic": "ٱلْكِتَـٰبُ", "category": "Isim", "translation": "Kitab", "audio_url": "https://audio.qurancdn.com/wbw/002_002_002.mp3" },
+      { "arabic": "لَا", "category": "Huruf", "translation": "tidak", "audio_url": "https://audio.qurancdn.com/wbw/002_002_003.mp3" },
+      { "arabic": "رَيْبَ", "category": "Isim", "translation": "keraguan", "audio_url": "https://audio.qurancdn.com/wbw/002_002_004.mp3" },
+      { "arabic": "فِيهِ", "category": "Campuran", "translation": "di dalamnya", "audio_url": "https://audio.qurancdn.com/wbw/002_002_006.mp3" },
+      { "arabic": "هُدًۭى", "category": "Isim", "translation": "petunjuk", "audio_url": "https://audio.qurancdn.com/wbw/002_002_008.mp3" },
+      { "arabic": "لِّلْمُتَّقِينَ", "category": "Campuran", "translation": "bagi orang-orang yang bertakwa", "audio_url": "https://audio.qurancdn.com/wbw/002_002_009.mp3" }
+    ],
+    "options": [
+      "Huruf jar · hijau · فِي menjarkan kata ganti yang tertulis menyatu",
+      "Isim · biru · seluruh فِيهِ dianggap satu isim tempat",
+      "Fi'il · merah · dianggap kata kerja berada",
+      "Huruf pada kata ganti · هِ dianggap partikel dan فِي dianggap isim"
+    ],
+    "option_rationales": [
+      "فِي huruf jar. هِ isim berupa kata ganti. Mushaf menulis keduanya dalam satu kata, فِيهِ. هُدًۭى isim karena bertanwin, artinya petunjuk.",
+      "Menggabungkan artinya tidak menghapus huruf jar di dalamnya.",
+      "Tidak ada pola fi'il pada فِيهِ.",
+      "Yang partikel adalah فِي. Kata ganti هِ adalah isim."
+    ],
+    "correct_answer": "Huruf jar · hijau · فِي menjarkan kata ganti yang tertulis menyatu",
+    "explanation": "فِيهِ satu kata tertulis. فِي huruf jar, dan هِ isim. Artinya di dalamnya.",
+    "audio_url": "https://audio.qurancdn.com/wbw/002_002_006.mp3",
+    "order_index": 1
+  },
+  {
+    "surah_number": 2,
+    "ayah_number": 3,
+    "skill_level": 1,
+    "formula_key": null,
+    "prompt": "Rumus kata tertulis بِٱلْغَيْبِ pada QS Al-Baqarah 2:3 adalah…",
+    "highlighted_word": "بِٱلْغَيْبِ",
+    "verse_words": [
+      { "arabic": "ٱلَّذِينَ", "category": "Isim", "translation": "orang-orang yang", "audio_url": "https://audio.qurancdn.com/wbw/002_003_001.mp3" },
+      { "arabic": "يُؤْمِنُونَ", "category": "Fi'il", "translation": "mereka beriman", "audio_url": "https://audio.qurancdn.com/wbw/002_003_002.mp3" },
+      { "arabic": "بِٱلْغَيْبِ", "category": "Campuran", "translation": "dengan yang gaib", "audio_url": "https://audio.qurancdn.com/wbw/002_003_003.mp3" }
+    ],
+    "options": [
+      "Huruf jar di depan isim ber-alif-lam · keduanya satu kata tertulis",
+      "Satu fi'il · بِٱلْغَيْبِ dianggap kata kerja beriman",
+      "Isim pada suku بِ · alif-lam dianggap milik partikel",
+      "Huruf pada يُؤْمِنُونَ · waw-nun dianggap partikel athaf"
+    ],
+    "option_rationales": [
+      "بِ huruf jar. Isim sesudahnya ber-alif-lam dan tertulis menyatu: بِٱلْغَيْبِ. Artinya dengan yang gaib. يُؤْمِنُونَ fi'il mudhari', mereka beriman.",
+      "Fi'il pada cuplikan ini adalah يُؤْمِنُونَ.",
+      "Alif-lam milik isim الغيب, bukan milik بِ.",
+      "Waw-nun pada يُؤْمِنُونَ adalah fa'il dan nun rafa', bukan huruf athaf."
+    ],
+    "correct_answer": "Huruf jar di depan isim ber-alif-lam · keduanya satu kata tertulis",
+    "explanation": "بِٱلْغَيْبِ satu kata mushaf: huruf jar lalu isim yang ber-alif-lam.",
+    "audio_url": "https://audio.qurancdn.com/wbw/002_003_003.mp3",
+    "order_index": 2
+  },
+  {
+    "surah_number": 36,
+    "ayah_number": 82,
+    "skill_level": 2,
+    "formula_key": null,
+    "prompt": "Kelas كُن pada QS Yasin 36:82, menurut bacaan Hafs, adalah…",
+    "highlighted_word": "كُن",
+    "verse_words": [
+      { "arabic": "أَن", "category": "Huruf", "translation": "bahwa", "audio_url": "https://audio.qurancdn.com/wbw/036_082_006.mp3" },
+      { "arabic": "يَقُولَ", "category": "Fi'il", "translation": "Dia mengatakan", "audio_url": "https://audio.qurancdn.com/wbw/036_082_007.mp3" },
+      { "arabic": "لَهُۥٓ", "category": "Campuran", "translation": "kepadanya", "audio_url": "https://audio.qurancdn.com/wbw/036_082_008.mp3" },
+      { "arabic": "كُن", "category": "Fi'il", "translation": "jadilah", "audio_url": "https://audio.qurancdn.com/wbw/036_082_009.mp3" },
+      { "arabic": "فَيَكُونُ", "category": "HurufFiil", "translation": "maka ia jadi", "audio_url": "https://audio.qurancdn.com/wbw/036_082_010.mp3" }
+    ],
+    "options": [
+      "Fi'il amr · merah · berakhir sukun, artinya jadilah",
+      "Fi'il mudhari' · merah · dianggap sama dengan يَكُونُ",
+      "Isim · biru · dianggap masdar كَوْن karena kata itu pendek",
+      "Huruf · hijau · dianggap partikel perintah"
+    ],
+    "option_rationales": [
+      "كُن fi'il amr dari كَانَ, artinya jadilah. فَيَكُونُ kata tertulis berikutnya: fi'il mudhari' dengan fa di depannya, dan pada Hafs nun-nya ber-dhammah. لَهُۥٓ satu kata: huruf jar dan kata ganti.",
+      "يَكُونُ memiliki ya mudhari'. كُن tidak.",
+      "Masdarnya كَوْنٌ. Yang tertulis adalah fi'il amr.",
+      "Seluruh كُن adalah fi'il, bukan partikel."
+    ],
+    "correct_answer": "Fi'il amr · merah · berakhir sukun, artinya jadilah",
+    "explanation": "كُن fi'il amr, artinya jadilah. فَيَكُونُ adalah kata lain, fi'il mudhari' dalam bacaan Hafs.",
+    "audio_url": "https://audio.qurancdn.com/wbw/036_082_009.mp3",
+    "order_index": 1
+  },
+  {
+    "surah_number": 78,
+    "ayah_number": 1,
+    "skill_level": 3,
+    "formula_key": null,
+    "prompt": "Arti يَتَسَآءَلُونَ pada QS An-Naba 78:1 adalah…",
+    "highlighted_word": "يَتَسَآءَلُونَ",
+    "verse_words": [
+      { "arabic": "عَمَّ", "category": "Campuran", "translation": "tentang apa", "audio_url": "https://audio.qurancdn.com/wbw/078_001_001.mp3" },
+      { "arabic": "يَتَسَآءَلُونَ", "category": "Fi'il", "translation": "mereka saling bertanya", "audio_url": "https://audio.qurancdn.com/wbw/078_001_002.mp3" }
+    ],
+    "options": [
+      "mereka saling bertanya · fi'il mudhari' merah",
+      "tentang apa · itu arti kata tertulis عَمَّ",
+      "pertanyaan · isim masdar",
+      "mereka telah saling bertanya · fi'il madhi"
+    ],
+    "option_rationales": [
+      "يَتَسَآءَلُونَ fi'il mudhari', artinya mereka saling bertanya. Kartunya merah.",
+      "Tentang apa adalah arti عَمَّ. Kata itu tertulis demikian, sebagai gabungan huruf jar dan isim, bukan dua kartu terpisah.",
+      "Masdarnya تَسَاؤُلٌ. Yang tertulis pada posisi ini adalah fi'il.",
+      "Madhi jama' tidak memakai ya di awal seperti bentuk ini."
+    ],
+    "correct_answer": "mereka saling bertanya · fi'il mudhari' merah",
+    "explanation": "يَتَسَآءَلُونَ berarti mereka saling bertanya. عَمَّ adalah kata tertulis sebelumnya, artinya tentang apa.",
+    "audio_url": "https://audio.qurancdn.com/wbw/078_001_002.mp3",
+    "order_index": 1
+  },
+  {
+    "surah_number": 114,
+    "ayah_number": 1,
+    "skill_level": 2,
+    "formula_key": null,
+    "prompt": "Kelas قُلْ pada QS An-Nas 114:1 adalah…",
+    "highlighted_word": "قُلْ",
+    "verse_words": [
+      { "arabic": "قُلْ", "category": "Fi'il", "translation": "katakanlah", "audio_url": "https://audio.qurancdn.com/wbw/114_001_001.mp3" },
+      { "arabic": "أَعُوذُ", "category": "Fi'il", "translation": "aku berlindung", "audio_url": "https://audio.qurancdn.com/wbw/114_001_002.mp3" },
+      { "arabic": "بِرَبِّ", "category": "Campuran", "translation": "dengan Tuhan", "audio_url": "https://audio.qurancdn.com/wbw/114_001_003.mp3" },
+      { "arabic": "ٱلنَّاسِ", "category": "Isim", "translation": "manusia", "audio_url": "https://audio.qurancdn.com/wbw/114_001_004.mp3" }
+    ],
+    "options": [
+      "Fi'il amr · merah · dari قَالَ, artinya katakanlah",
+      "Fi'il madhi · merah · dianggap sama dengan قَالَ",
+      "Isim · biru · dianggap masdar قَوْل",
+      "Huruf · hijau · dianggap partikel pembuka surah"
+    ],
+    "option_rationales": [
+      "قُلْ fi'il amr, artinya katakanlah. أَعُوذُ fi'il mudhari', aku berlindung. بِرَبِّ satu kata tertulis: huruf jar dan isim. ٱلنَّاسِ isim.",
+      "قَالَ adalah madhi. Amr-nya قُلْ.",
+      "Masdarnya قَوْلٌ. Yang tertulis adalah fi'il amr.",
+      "Ayat ini dibuka fi'il. Huruf jar ada di dalam بِرَبِّ, bukan pada قُلْ."
+    ],
+    "correct_answer": "Fi'il amr · merah · dari قَالَ, artinya katakanlah",
+    "explanation": "قُلْ fi'il amr, artinya katakanlah. بِرَبِّ tidak dipecah, karena mushaf menuliskannya sebagai satu kata.",
+    "audio_url": "https://audio.qurancdn.com/wbw/114_001_001.mp3",
+    "order_index": 1
+  }
+]

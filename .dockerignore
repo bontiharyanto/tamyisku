@@ -1,0 +1,11 @@
+node_modules
+.expo
+dist
+.git
+ios
+android
+supabase/.temp
+*.md
+masterprompt.mid
+.env
+.env.*

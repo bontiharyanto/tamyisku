@@ -1,0 +1,17 @@
+{
+  "name": "Tamyizku",
+  "short_name": "Tamyizku",
+  "description": "Belajar Al-Qur'an kata per kata dengan metode Tamyiz.",
+  "lang": "id",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8E7",
+  "theme_color": "#0E5A4A",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}

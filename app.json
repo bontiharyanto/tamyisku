@@ -1,17 +1,25 @@
 {
   "expo": {
-    "name": "tamyizsystem",
-    "slug": "tamyizsystem",
+    "name": "Tamyizku",
+    "slug": "tamyizku",
+    "scheme": "tamyizku",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tamyizku.app",
+      "infoPlist": {
+        "UIBackgroundModes": ["audio"],
+        "NSUserNotificationsUsageDescription": "Tamyizku mengingatkan Anda agar streak belajar tidak terputus."
+      }
     },
     "android": {
+      "package": "com.tamyizku.app",
+      "permissions": ["POST_NOTIFICATIONS", "RECEIVE_BOOT_COMPLETED", "VIBRATE"],
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -19,7 +27,44 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "output": "single",
+      "bundler": "metro",
+      "name": "Tamyizku",
+      "shortName": "Tamyizku",
+      "description": "Belajar Al-Qur'an kata per kata dengan metode Tamyiz.",
+      "lang": "id",
+      "themeColor": "#0E5A4A",
+      "backgroundColor": "#FFF8E7"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-web-browser",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 220
+        }
+      ],
+      "expo-audio",
+      [
+        "expo-notifications",
+        {
+          "color": "#0E5A4A"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Tamyizku memakai foto untuk bukti tiket dukungan.",
+          "microphonePermission": false
+        }
+      ]
+    ]
   }
 }

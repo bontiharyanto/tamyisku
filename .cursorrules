@@ -1,0 +1,41 @@
+# ==============================================================================
+# CURSOR RULES: Aplikasi Belajar Al-Qur'an Metode Tamyiz
+# Stack: Flutter/Expo (Frontend), Supabase (Auth, RLS, Storage), Deno (Edge Functions)
+# ==============================================================================
+
+# 1. CORE PRINCIPLES & STYLE GUIDE
+- Tulis kode yang modular, bersih, dan bertipe kuat (Strongly Typed).
+- Utamakan pendekatan **Offline-First** dengan caching lokal untuk data kosa kata Al-Qur'an dan modul Tamyiz.
+- Hindari penggunaan `any` di TypeScript atau `dynamic` di Dart tanpa alasan kuat.
+- Selalu pisahkan logika bisnis (State Management) dari antarmuka pengguna (UI/Components).
+
+# 2. METHODOLOGY & TAMYIZ SPECIFIC RULES
+- Setiap kartu kata Al-Qur'an WAJIB mendukung arah bacaan RTL (Right-to-Left).
+- Gunakan font Uthmani/Amiri yang jelas dan besar untuk teks Arab.
+- Konsistensi Kode Warna Tamyiz (`tamyiz_category`):
+  * **Isim**: Latar Biru Muda (#E3F2FD), Border Biru (#1976D2)
+  * **Fi'il**: Latar Merah Muda (#FFEBEE), Border Merah (#D32F2F)
+  * **Huruf**: Latar Hijau Muda (#E8F5E9), Border Hijau (#388E3C)
+  * **Tamyiz 1 / Kosa Kata Berulang**: Latar Kuning Muda (#FFFDE7), Border Kuning/Emas (#FBC02D)
+
+# 3. SUPABASE & DATABASE SECURITY RULES
+- Jangan pernah memanggil API Supabase tanpa memperhatikan aturan **Row Level Security (RLS)**.
+- Gunakan `SUPABASE_ANON_KEY` di level Frontend/Client.
+- Selalu gunakan `SUPABASE_SERVICE_ROLE_KEY` HANYA di lingkungan Supabase Edge Functions (Server-side) yang membutuhkan privilese khusus.
+- Gunakan pola **UPSERT** saat menyimpan progres kuis (`user_progress`) dan *high score retention* (hanya perbarui jika skor baru lebih tinggi).
+
+# 4. EDGE FUNCTIONS & PAYMENT INTEGRATION (MIDTRANS/XENDIT)
+- Selalu gunakan runtime Deno TypeScript untuk Supabase Edge Functions (`supabase/functions/*`).
+- Pastikan semua endpoint Edge Function menangani preflight CORS request (`OPTIONS`).
+- Sertakan penanganan error yang rinci (*try-catch*) dan kembalikan status HTTP JSON yang sesuai (`200`, `400`, `401`, `500`).
+- Simpan rahasia API (seperti `MIDTRANS_SERVER_KEY`) di Supabase Secrets, bukan diketik langsung di kode (*hardcoded*).
+
+# 5. ERROR HANDLING & USER FEEDBACK
+- Tampilkan komponen Skeleton Loader / Loading Spinner pada setiap proses asynchronous (API fetch, database query).
+- Gunakan notifikasi Toast/Snackbar untuk memberi feedback instan pada tindakan pengguna (misal: "Jawaban Benar!", "Skor Berhasil Disimpan", "Pembayaran Gagal").
+- Sertakan logika pemulihan otomatis (*retry mechanism*) jika koneksi jaringan terputus saat kuis berlangsung atau saat pembayaran.
+
+# 6. APP STORE COMPLIANCE & ACCESSIBILITY
+- Pastikan ada tombol/fitur **Hapus Akun** (`Account Deletion`) di halaman Pengaturan sesuai standar Google Play & App Store.
+- Sediakan fitur pencegahan *piracy* (matikan screenshot/screen recording pada halaman modul utama jika memungkinkan).
+- Pastikan tata letak responsif dan rapi saat dibuka di perangkat dengan layar kecil (HP) maupun layar lebar (Tablet/Web).
